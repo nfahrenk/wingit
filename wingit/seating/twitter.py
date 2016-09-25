@@ -53,7 +53,7 @@ class twitter():
             count = count + 1
 
             if boo and len(tweets) > 0:
-                stringTweets = stringTweets + '{"id":"%d","text":"%s"}' % (count, alltweets[-1].text)
+                stringTweets = stringTweets + ',{"id":"%d","text":"%s"}' % (count, alltweets[-1].text)
 
         stringTweets = stringTweets + ']}'
         
