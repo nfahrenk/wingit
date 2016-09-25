@@ -6,6 +6,8 @@ from django.contrib.postgres.fields import ArrayField
 class Person(models.Model):
     first_name = models.CharField(max_length=15)
     last_name = models.CharField(max_length=15)
+    industry = models.CharField(max_length=50)
+    prefersBusiness = models.BooleanField(_("Prefers Business?"), default=False)
     likes = ArrayField(models.CharField(max_length=20))
     twitter_handle = models.CharField(_("Twitter Handle"), max_length=15, blank=True)
 

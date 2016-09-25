@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load pretty_forms %}
 <!DOCTYPE HTML>
 <!--
 	Theory by TEMPLATED
@@ -82,7 +83,7 @@
 					    		{% endwith %}
 							</div>
 							<h3>{{name}}</h3>
-							{{form}}
+							{{ form.as_p|pretty_checkbox|safe }}
 						</div>
 						{% endfor %}						
 					</div>
@@ -100,7 +101,7 @@
 					</header>
 					<div class="flex flex-2">
 						{% for personA, personB, reasoning in matches %}
-							<div>												
+							<div style="width:50%">												
 							<div class="hover-tile-outer">
 								<div class="hover-tile-container">							  	
 							    	<div class="hover-tile hover-tile-visible">
@@ -140,6 +141,7 @@
 							 	</div>
 							</div>
 							</div>
+							
 						{% endfor %}
 					</div>
 				</div>

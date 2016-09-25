@@ -11,6 +11,7 @@ select {
   color: black;
 }
 
+
 .hover-tile-outer {
   width: 12em;
   display: inline-block;
@@ -50,6 +51,9 @@ select {
 }
 .hover-tile-outer .hover-tile-hidden h4 {
   margin: 0 0 0.5em 0;
+}
+h4 {
+  color: white;
 }
 
 @charset "UTF-8";
