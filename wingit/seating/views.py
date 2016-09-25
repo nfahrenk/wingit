@@ -15,7 +15,7 @@ class IndexView(TemplateView):
             for person in Person.objects.all()
         }
         fbInfo = {
-            person.pk: person.industry if person.prefersBusiness else [(COUNTS[like][1], like, COUNTS[like][0]) for like in person.likes]
+            person.pk: person.getIndustry() if person.prefersBusiness else [(COUNTS[like][1], like, COUNTS[like][0]) for like in person.likes]
             for person in Person.objects.all()
         }
         matches = [

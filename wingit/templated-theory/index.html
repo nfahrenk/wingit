@@ -83,7 +83,7 @@
 					    		{% endwith %}
 							</div>
 							<h3>{{name}}</h3>
-							{{ form.as_p|pretty_checkbox|safe }}
+							{{ form.as_p }}
 						</div>
 						{% endfor %}						
 					</div>
@@ -99,6 +99,9 @@
 						<h2>Seating and Curated Content</h2>
 						<p>Hover over for more details.</p>
 					</header>
+					<div style="border: 1px solid #DDD; padding-top:10px; width: 40%; margin: 10px 30%">
+						<h2>Cockpit</h2>
+					</div>
 					<div class="flex flex-2">
 						{% for personA, personB, reasoning in matches %}
 							<div style="width:50%">												
@@ -114,7 +117,15 @@
 							    	</div>
 							    	<div class="hover-tile hover-tile-hidden">
 							      		<h4>{{ personA.full_name }}</h4>
-							      		<p>{{ personA.getMood }}</p>
+							      		{% with personA.getMood as mood %}
+						      			<p>
+							      			{% if mood %}
+							      				We recommend watching {{ mood }}.
+							      			{% else %}
+							      				No recommendations available.
+							      			{% endif %}
+						      			</p>
+						      			{% endwith %}
 							    	</div>
 							 	</div>
 							</div>
@@ -136,7 +147,15 @@
 							    	</div>
 							    	<div class="hover-tile hover-tile-hidden">
 							      		<h4>{{ personB.full_name }}</h4>
-							      		<p>{{ personB.getMood }}</p>
+							      		{% with personB.getMood as mood %}
+						      			<p>
+							      			{% if mood %}
+							      				We recommend watching {{ mood }}.
+							      			{% else %}
+							      				No recommendations available.
+							      			{% endif %}
+						      			</p>
+						      			{% endwith %}
 							    	</div>
 							 	</div>
 							</div>

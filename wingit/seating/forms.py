@@ -3,7 +3,6 @@ from seating.models import Person
 from LIKE_CHOICES import CHOICES
 
 class PersonForm(ModelForm):
-    BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
     def __init__(self, *args, **kwargs):
         super(PersonForm, self).__init__(*args, **kwargs)
         self.fields['twitter_handle'] = CharField(required=False)
@@ -11,5 +10,5 @@ class PersonForm(ModelForm):
 
     class Meta:
         model = Person
-        fields = ["likes", "twitter_handle", "industry", "prefersBusiness"]
+        fields = ["likes", "twitter_handle", "ind", "prefersBusiness"]
 

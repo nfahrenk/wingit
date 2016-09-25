@@ -14,41 +14,62 @@ import math
 # [("nick", "kyle", "band2"), ("justin", None, None)]
 
 def findMatches(peopleOnFlight):
+
+	linkedInFlyers = {}
+	facebookFliers = {}
+
+	#Start with linkedIn (much easier)
+	for person in peopleOnFlight:
+		if isinstance(peopleOnFlight[person], basestring):
+			linkedInFlyers[person] =  peopleOnFlight[person]
+		else:
+			facebookFliers[person] = peopleOnFlight[person]
+
+	finalMatches = []
+	remainingLinkers = linkedInFlyers.copy()
+	for person1 in linkedInFlyers:
+		if person1 in remainingLinkers:
+			for person2 in linkedInFlyers:
+				if person1 != person2 and person2 in remainingLinkers and person1 in remainingLinkers:
+					if linkedInFlyers[person1] == linkedInFlyers[person2]:
+						matchBio = (person1, person2, linkedInFlyers[person1])
+						remainingLinkers.pop(person1)
+						remainingLinkers.pop(person2)
+						finalMatches.append(matchBio)
+
+	#LinkedIn Done, now faceook
 	#Create matchMatrix of zeros for comparing people on flight
 	matchMatrix = []
-	for x in range(0, len(peopleOnFlight)):
+	for x in range(0, len(facebookFliers)):
 		subList = []
-		for x in range(0, len(peopleOnFlight)):
+		for x in range(0, len(facebookFliers)):
 			subList.append(0)
 		matchMatrix.append(subList)
 
-
-
-	for person in peopleOnFlight:
-		personInd = peopleOnFlight.keys().index(person)
-		for interest, interestID, likes in peopleOnFlight[person]:
-			for potentialMatch in peopleOnFlight:
-				matchInd = peopleOnFlight.keys().index(potentialMatch)
+	for person in facebookFliers:
+		personInd = facebookFliers.keys().index(person)
+		for interest, interestID, likes in facebookFliers[person]:
+			for potentialMatch in facebookFliers:
+				matchInd = facebookFliers.keys().index(potentialMatch)
 				if personInd != matchInd:
-					for interest2, interestID2, likes2 in peopleOnFlight[potentialMatch]:
+					for interest2, interestID2, likes2 in facebookFliers[potentialMatch]:
 						if (interestID == interestID2):
 							matchVal = 1/(math.log(likes))
 							matchMatrix[personInd][matchInd] += matchVal
 
 
 	priorityVals = []
-	for y in range (0, len(peopleOnFlight)):
-		for x in range (y + 1, len(peopleOnFlight)):
+	for y in range (0, len(facebookFliers)):
+		for x in range (y + 1, len(facebookFliers)):
 			if matchMatrix[y][x] != 0:
 				priorityVals.append(matchMatrix[y][x])
 
 	priorityVals = sorted(priorityVals);
 
 	#Create matchList
-	remainingPeople = peopleOnFlight.copy()
+	remainingFacebookers = facebookFliers.copy()
 	matchMadeIndexes = []
 	# matchList = []
-	finalMatches = []
 	for matchVal in reversed(priorityVals):
 		# Search list for matchVal and match the two people
 		for y in range (0, len(matchMatrix)):
@@ -56,20 +77,20 @@ def findMatches(peopleOnFlight):
 				for x in range (y + 1, len(matchMatrix[0])):
 					if x not in matchMadeIndexes and y not in matchMadeIndexes:
 						if matchMatrix[y][x] == matchVal:
-							person1 = peopleOnFlight.keys()[y]
-							person2 = peopleOnFlight.keys()[x]
+							person1 = facebookFliers.keys()[y]
+							person2 = facebookFliers.keys()[x]
 							# newLine = person1 + " sitting with " + person2
 							# matchList.append(newLine)
 							# pdb.set_trace()
-							remainingPeople.pop(person1)
-							remainingPeople.pop(person2)
+							remainingFacebookers.pop(person1)
+							remainingFacebookers.pop(person2)
 							matchMadeIndexes.append(y)
 							matchMadeIndexes.append(x)
 
 							bestInterest = ""
 							bestVal = 0
-							for interest, interestID, likes in peopleOnFlight[person1]:
-								for interest2, interestID2, likes2 in peopleOnFlight[person2]:
+							for interest, interestID, likes in facebookFliers[person1]:
+								for interest2, interestID2, likes2 in facebookFliers[person2]:
 									if interestID == interestID2:
 										interestVal = 1/(math.log(likes))
 										if interestVal > bestVal:
@@ -79,7 +100,13 @@ def findMatches(peopleOnFlight):
 							matchBio = (person1, person2, bestInterest)
 							finalMatches.append(matchBio)
 
-	
+	# Put all the lonely hearts in one pool so they can live their sad lives next to each other on the plane
+	remainingPeople = {}
+	for person in remainingFacebookers:
+		remainingPeople[person] = remainingFacebookers[person]
+	for person in remainingLinkers:
+		remainingPeople[person] = remainingLinkers[person]
+
 	while len(remainingPeople) >= 2:
 		person1 = remainingPeople.keys()[0]
 		person2 = remainingPeople.keys()[1]

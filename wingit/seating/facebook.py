@@ -78,10 +78,3 @@ class FacebookQuery():
         h = response["languages"]
         return [(h["id"], h["name"])]
 
-fq = FacebookQuery()
-out = {
-    like: (fq.getPageLikes(like)["likes"], fq.getPageLikes(like)["name"])
-    for like in fq.getAllRelevantUserLikes()
-}
-print out
-
