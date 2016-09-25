@@ -80,7 +80,7 @@ class FacebookQuery():
 
 fq = FacebookQuery()
 out = {
-    like: fq.getPageLikes(like)["likes"]
+    like: (fq.getPageLikes(like)["likes"], fq.getPageLikes(like)["name"])
     for like in fq.getAllRelevantUserLikes()
 }
 print out

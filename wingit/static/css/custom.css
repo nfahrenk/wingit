@@ -7,24 +7,27 @@
 select {
   height: 150px;
 }
+.hover-tile-outer p {
+  color: black;
+}
 
 .hover-tile-outer {
-  width: 14em;
+  width: 12em;
   display: inline-block;
   background-color: #EFEFEF;
   background-position: top;
   background-size: cover;
   border: 1px solid gainsboro;
   cursor: pointer;
-  height: 14em;
+  height: 12em;
   margin-bottom: 1.5em;
 }
 .hover-tile-outer img {
-  height: 150px;
-  width: 150px;
+  height: 125px;
+  width: 125px;
 }
 .hover-tile-outer .hover-tile-container {
-  height: 14em;
+  height: 12em;
   overflow: hidden;
 }
 .hover-tile-outer .hover-tile-container:hover > .hover-tile {

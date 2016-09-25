@@ -100,7 +100,7 @@
 					</header>
 					<div class="flex flex-2">
 						{% for personA, personB, reasoning in matches %}
-						<div>
+							<div>												
 							<div class="hover-tile-outer">
 								<div class="hover-tile-container">							  	
 							    	<div class="hover-tile hover-tile-visible">
@@ -108,6 +108,7 @@
 							    		<div class="image round">
 							    		<img src="{% static image_a %}" alt="{{personA}}" />
 							    		</div>
+							    		<p> {% widthratio forloop.counter 2 1 %}{% if forloop.counter|divisibleby:2 %}c{% else %}a{% endif %}</p>
 							    		{% endwith %}
 							    	</div>
 							    	<div class="hover-tile hover-tile-hidden">
@@ -117,7 +118,7 @@
 							 	</div>
 							</div>
 							<div class="tooltip-item">
-							  <i class="fa fa-question-circle-o" aria-hidden="true" style="font-size: 48px"></i>
+							  <i class="fa fa-question-circle-o" aria-hidden="true" style="font-size: 32px"></i>
 							  <div class="tooltip">
 							    <p>{{ reasoning }}</p>
 							  </div>
@@ -129,6 +130,7 @@
 							    		<div class="image round">
 							    		<img src="{% static image_b %}" alt="{{personB}}" />
 							    		</div>
+							    		<p>{% widthratio forloop.counter 2 1 %}{% if forloop.counter|divisibleby:2 %}d{% else %}b{% endif %}</p>
 							    		{% endwith %}
 							    	</div>
 							    	<div class="hover-tile hover-tile-hidden">
@@ -137,7 +139,7 @@
 							    	</div>
 							 	</div>
 							</div>
-						</div>
+							</div>
 						{% endfor %}
 					</div>
 				</div>
@@ -148,11 +150,8 @@
 				<div class="inner">
 					<div class="flex">
 						<div class="copyright">
-							&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+							&copy; WingIt.
 						</div>
-						<ul class="icons">
-							<li><a href="#" class="icon fa-facebook"><span class="label">Github</span></a></li>
-						</ul>
 					</div>
 				</div>
 			</footer>

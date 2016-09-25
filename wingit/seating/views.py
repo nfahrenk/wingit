@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 from seating.forms import PersonForm
 from seating.models import Person
 from django.contrib import messages
+from LIKE_CHOICES import COUNTS
+from seating_algorithm import findMatches
 
 class IndexView(TemplateView):
     def get(self, request):
@@ -12,10 +14,13 @@ class IndexView(TemplateView):
             str(person): PersonForm(instance=person, prefix=str(person))
             for person in Person.objects.all()
         }
-        people = Person.objects.all()
+        fbInfo = {
+            person.pk: [(COUNTS[like][1], like, COUNTS[like][0]) for like in person.likes]
+            for person in Person.objects.all()
+        }
         matches = [
-            (people[2*i], people[2*i+1], "band%d" % i)
-            for i in range(0, len(people)/2)
+            (Person.objects.get(pk=personA), Person.objects.get(pk=personB), reason)
+            for personA, personB, reason in findMatches(fbInfo)
         ]
         return render(request, 'index.html', {"forms": forms, "matches": matches})
 
@@ -25,8 +30,10 @@ class IndexView(TemplateView):
             for person in Person.objects.all()
         ]
         stillTrue = True
+        
         for form in forms:
             stillTrue = stillTrue and form.is_valid()
+        
         if stillTrue:
             for form in forms:
                 form.save(commit=True)
@@ -35,4 +42,5 @@ class IndexView(TemplateView):
                 if not form.is_valid():
                     for key, error in form.errors.items():
                         messages.error(key + " - " + error)
+        
         return HttpResponseRedirect(reverse('index', args=[]))
